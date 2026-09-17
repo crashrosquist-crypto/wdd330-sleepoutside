@@ -29,22 +29,16 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
-export function renderListWithTemplate(
-  templateFn,
-  parentElement,
-  list,
-  position = "afterbegin",
-  clear = false
-) {
-  if (clear) {
-    parentElement.innerHTML = "";
-  }
-  const htmlStrings = list.map(templateFn);
-  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+export function renderWithTemplate(template, parentElement, data, callback) {
+    parentElement.insertAdjacentHTML("afterbegin", template);
+    if (callback) {
+      callback(data);
+    }
 }
 
 export function alertMessage(message, scroll = true) {
   // First make container...
+  const main = document.querySelector("main");
   const alert = document.createElement("div");
   alert.classList.add("alert");
 
@@ -58,7 +52,6 @@ export function alertMessage(message, scroll = true) {
     }
   });
 
-  const main = document.querySelector("main");
   main.prepend(alert);
 
   if (scroll) {
@@ -70,4 +63,21 @@ export function alertMessage(message, scroll = true) {
       main.removeChild(alert);
     }
   }, 4000);
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
 }
