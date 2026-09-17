@@ -135,6 +135,41 @@ p {
   margin-top: -1.7em;
 }
 
+/* Category Grid Styles */
+.categories {
+  text-align: center;
+  padding: 1rem;
+}
+
+.category-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin-top: 1rem;
+}
+
+.category-grid a {
+  text-decoration: none;
+  color: var(--dark-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px; /* Limits width of each category item */
+}
+
+.category-grid img {
+  width: 60px;  /* Makes SVG icons a clean, small size */
+  height: 60px;
+  object-fit: contain;
+}
+
+.category-grid h3 {
+  font-size: var(--small-font);
+  margin-top: 0.5rem;
+}
+
 /* utility classes */
 .highlight {
   color: var(--tertiary-color);
