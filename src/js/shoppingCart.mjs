@@ -1,13 +1,18 @@
 import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
 
+const displayCartItem = document.querySelector(".product-list");
+
 loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   // Check if something is in cart before processing cart items.
   if (cartItems !== null) {
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+      const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+      // Clean the display card
+      displayCartItem.innerHTML = "";
+      // Display the items
+      displayCartItem.innerHTML = htmlItems.join("");
   }
 }
 
