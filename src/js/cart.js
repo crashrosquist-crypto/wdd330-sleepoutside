@@ -1,29 +1,29 @@
-import { getLocalStorage, loadHeaderFooter, alertMessage } from "./utils.mjs";
+import { getLocalStorage, loadHeaderFooter, alertMessage } from './utils.mjs';
 
 loadHeaderFooter();
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
-  const productList = document.querySelector(".product-list");
-  const cartFooter = document.querySelector(".cart-footer");
+  const cartItems = getLocalStorage('so-cart') || [];
+  const productList = document.querySelector('.product-list');
+  const cartFooter = document.querySelector('.cart-footer');
 
   if (cartItems.length > 0) {
     // Render list items
     const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    productList.innerHTML = htmlItems.join("");
+    productList.innerHTML = htmlItems.join('');
 
     // Render total sum and reveal footer
     renderCartTotal(cartItems);
   } else {
-    productList.innerHTML = "<p>Your cart is empty.</p>";
-    if (cartFooter) cartFooter.classList.add("hide");
-    alertMessage("Your cart is currently empty.");
+    productList.innerHTML = '<p>Your cart is empty.</p>';
+    if (cartFooter) cartFooter.classList.add('hide');
+    alertMessage('Your cart is currently empty.');
   }
 }
 
 function renderCartTotal(cartItems) {
-  const cartFooter = document.querySelector(".cart-footer");
-  const totalElement = document.querySelector(".list-total");
+  const cartFooter = document.querySelector('.cart-footer');
+  const totalElement = document.querySelector('.list-total');
 
   // Sum FinalPrice across all items in storage
   const total = cartItems.reduce((sum, item) => sum + Number(item.FinalPrice || 0), 0);
@@ -33,13 +33,13 @@ function renderCartTotal(cartItems) {
   }
 
   if (cartFooter) {
-    cartFooter.classList.remove("hide");
+    cartFooter.classList.remove('hide');
   }
 }
 
 function cartItemTemplate(item) {
-  const imageSrc = item.Images?.PrimaryMedium || item.Image || "";
-  const colorName = item.Colors?.[0]?.ColorName || "";
+  const imageSrc = item.Images?.PrimaryMedium || item.Image || '';
+  const colorName = item.Colors?.[0]?.ColorName || '';
   const productLink = `/product_pages/index.html?product=${item.Id}`;
 
   return `<li class="cart-card divider">
