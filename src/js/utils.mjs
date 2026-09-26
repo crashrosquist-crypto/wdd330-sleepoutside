@@ -2,8 +2,6 @@
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
@@ -31,9 +29,7 @@ export function getParam(param) {
 }
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
-
   const htmlStrings = list.map(templateFn);
-
   if (clear) {
     parentElement.innerHTML = "";
   }
@@ -41,27 +37,19 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 }
 
 export function alertMessage(message, scroll = true) {
-  // First make container...
   const alert = document.createElement("div");
   alert.classList.add("alert");
-
-  // Populate inner content with a close button
   alert.innerHTML = `<p>${message}</p><span>X</span>`;
-
-  // Event listener
   alert.addEventListener("click", (e) => {
     if (e.target.tagName === "SPAN" || e.target.classList.contains("alert")) {
       main.removeChild(alert);
     }
   });
-
   const main = document.querySelector("main");
   main.prepend(alert);
-
   if (scroll) {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
-
   setTimeout(() => {
     if (main.contains(alert)) {
       main.removeChild(alert);
@@ -69,36 +57,28 @@ export function alertMessage(message, scroll = true) {
   }, 4000);
 }
 
-<<<<<<< HEAD
-// updates the superscript badge on the cart/backpack icon with the
-// number of items currently stored in the cart
 export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart");
   const count = Array.isArray(cartItems) ? cartItems.length : 0;
-
   const cartCountElement = qs(".cart-count");
   if (cartCountElement) {
     cartCountElement.textContent = count;
   }
 }
-=======
-// 1
-export function renderWithTemplate(template, parentElement, data, callback) {
 
+export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.innerHTML = template;
   if (callback) {
     callback(data);
   }
 }
 
-// 2
 export async function loadTemplate(path) {
   const res = await fetch(path);
   const template = await res.text();
   return template;
 }
 
-// 3
 export async function loadHeaderFooter() {
   const headerTemplate = await loadTemplate("../partials/header.html");
   const footerTemplate = await loadTemplate("../partials/footer.html");
@@ -109,5 +89,5 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 
+  updateCartCount();
 }
->>>>>>> origin/main
