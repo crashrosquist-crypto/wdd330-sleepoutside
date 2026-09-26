@@ -71,3 +71,15 @@ export function alertMessage(message, scroll = true) {
     }
   }, 4000);
 }
+
+// updates the superscript badge on the cart/backpack icon with the
+// number of items currently stored in the cart
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart");
+  const count = Array.isArray(cartItems) ? cartItems.length : 0;
+
+  const cartCountElement = qs(".cart-count");
+  if (cartCountElement) {
+    cartCountElement.textContent = count;
+  }
+}
