@@ -1,14 +1,24 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 import Alert from "./Alert.mjs";
+<<<<<<< HEAD
 import { updateCartCount } from "./utils.mjs";
+=======
+import { loadHeaderFooter } from "./utils.mjs";
+
+loadHeaderFooter();
+>>>>>>> origin/main
 
 const alert = new Alert();
 alert.init();
 const listElement = document.querySelector(".product-list");
 const dataSource = new ProductData("tents");
-
 const productList = new ProductList("tents", dataSource, listElement);
+<<<<<<< HEAD
 productList.init();
 
 updateCartCount();
+=======
+
+productList.init();
+>>>>>>> origin/main
