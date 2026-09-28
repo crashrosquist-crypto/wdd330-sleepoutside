@@ -1,4 +1,4 @@
-import { getLocalStorage, loadHeaderFooter, alertMessage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, loadHeaderFooter, alertMessage } from './utils.mjs';
 
 loadHeaderFooter();
 
@@ -43,6 +43,7 @@ function cartItemTemplate(item) {
   const productLink = `/product_pages/index.html?product=${item.Id}`;
 
   return `<li class="cart-card divider">
+  <span class="cart-card__remove" data-id="${item.Id}">❌</span>
   <a href="${productLink}" class="cart-card__image">
     <img src="${imageSrc}" alt="${item.Name}" />
   </a>
@@ -53,6 +54,31 @@ function cartItemTemplate(item) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${Number(item.FinalPrice).toFixed(2)}</p>
 </li>`;
+}
+
+function removeItemFromCart(id) {
+  let cartItems = getLocalStorage('so-cart') || [];
+  
+  // Find index of the first item with matching ID and remove it
+  const index = cartItems.findIndex((item) => item.Id === id);
+  if (index !== -1) {
+    cartItems.splice(index, 1);
+  }
+
+  // Save back to local storage and re-render cart contents
+  setLocalStorage('so-cart', cartItems);
+  renderCartContents();
+}
+
+// Event delegation listener for the remove button clicks
+const productListElement = document.querySelector('.product-list');
+if (productListElement) {
+  productListElement.addEventListener('click', (e) => {
+    if (e.target.classList.contains('cart-card__remove')) {
+      const idToRemove = e.target.dataset.id;
+      removeItemFromCart(idToRemove);
+    }
+  });
 }
 
 renderCartContents();

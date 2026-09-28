@@ -20,11 +20,12 @@ export default class ExternalServices {
   }
 
   async findProductById(id) {
-    const url = baseURL.endsWith("/") ? `${baseURL}product/${id}` : `${baseURL}/product/${id}`;
-    const response = await fetch(url);
-    const data = await convertToJson(response);
-    return data.Result;
-  }
+  const url = baseURL.endsWith("/") ? `${baseURL}product/${id}` : `${baseURL}/product/${id}`;
+  const response = await fetch(url);
+  const data = await convertToJson(response);
+  // Return data.Result if it exists, otherwise return data directly
+  return data.Result || data;
+}
 
   async checkout(payload) {
     const url = baseURL.endsWith("/") ? `${baseURL}checkout` : `${baseURL}/checkout`;
